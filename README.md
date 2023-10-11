@@ -30,7 +30,7 @@ Clone the repository:
 
 Copy code
 ```bash
- git clone https://github.com/your-username/your-mvvm-movie-app.git
+ git clone https://github.com/kochipek/mvvm-MovieApp.git
 
 ```
 Open the project in Android Studio.
