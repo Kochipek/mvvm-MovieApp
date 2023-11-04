@@ -2,9 +2,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.kochipek.moviesmvvm.databinding.ListRowBinding
-import com.kochipek.moviesmvvm.model.Movie
+import com.kochipek.moviesmvvm.data.model.Movie
+import com.kochipek.moviesmvvm.utils.downloadFromUrl
+import com.kochipek.moviesmvvm.utils.placeholderProgressBar
 import com.kochipek.moviesmvvm.view.FeedFragmentDirections
 
 class MovieAdapter(val movieList: ArrayList<Movie>) :
@@ -16,9 +17,7 @@ class MovieAdapter(val movieList: ArrayList<Movie>) :
             binding.movieTitle.text = model.title
             binding.movieReleaseDate.text = model.release_date
             binding.movieRating.text = model.vote_average
-            Glide.with(binding.imageView.context)
-                .load("https://image.tmdb.org/t/p/w500${model.poster_path}")
-                .into(binding.imageView)
+            binding.imageView.downloadFromUrl("https://image.tmdb.org/t/p/w500${model.poster_path}", placeholderProgressBar(binding.root.context))
         }
     }
 

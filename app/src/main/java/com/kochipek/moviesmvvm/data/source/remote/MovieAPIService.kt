@@ -1,21 +1,21 @@
-package com.kochipek.moviesmvvm.service
+package com.kochipek.moviesmvvm.data.source.remote
 
-import com.kochipek.moviesmvvm.model.MovieResponse
+import com.kochipek.moviesmvvm.data.model.MovieResponse
+import com.kochipek.moviesmvvm.utils.Utils
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MovieAPIService {
-    private val BaseUrl = "https://api.themoviedb.org/3/"
-    val apiKey = "43cf09ac0f4b550009ffed8bc2834096"
+
     private val api = Retrofit.Builder()
-        .baseUrl(BaseUrl)
+        .baseUrl(Utils.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(MovieAPI::class.java)
 
     suspend fun getData(): Response<MovieResponse> {
-        return api.getAllMovies(apiKey)
+        return api.getAllMovies(Utils.API_KEY)
     }
 
 }

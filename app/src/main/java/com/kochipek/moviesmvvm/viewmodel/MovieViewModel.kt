@@ -2,7 +2,7 @@ package com.kochipek.moviesmvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kochipek.moviesmvvm.model.Movie
+import com.kochipek.moviesmvvm.data.model.Movie
 
 class MovieViewModel : ViewModel() {
     val movieLiveData = MutableLiveData<Movie>()

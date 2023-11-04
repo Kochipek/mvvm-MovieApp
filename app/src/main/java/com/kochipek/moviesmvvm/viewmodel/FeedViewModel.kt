@@ -2,14 +2,13 @@ package com.kochipek.moviesmvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kochipek.moviesmvvm.model.Movie
-import com.kochipek.moviesmvvm.service.MovieAPIService
+import com.kochipek.moviesmvvm.data.model.Movie
+import com.kochipek.moviesmvvm.data.source.remote.MovieAPIService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.Response
 
 class FeedViewModel : ViewModel() {
     var job : Job? = null

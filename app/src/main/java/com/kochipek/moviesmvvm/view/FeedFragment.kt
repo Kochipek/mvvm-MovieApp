@@ -11,6 +11,7 @@ import com.kochipek.moviesmvvm.R
 import com.kochipek.moviesmvvm.databinding.FragmentFeedBinding
 import com.kochipek.moviesmvvm.viewmodel.FeedViewModel
 
+
 class FeedFragment : Fragment(R.layout.fragment_feed) {
     private lateinit var binding: FragmentFeedBinding
     private lateinit var viewModel: FeedViewModel

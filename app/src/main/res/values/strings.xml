@@ -12,5 +12,5 @@
     <string name="_2016_10_19">2016-10-19</string>
     <string name="description">Description</string>
     <string name="long_description">Long Description.</string>
-    <string name="todo">TODO</string>
+    <string name="desc" />
 </resources>
