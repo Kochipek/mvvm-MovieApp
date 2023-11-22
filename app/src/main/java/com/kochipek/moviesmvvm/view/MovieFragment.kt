@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.kochipek.moviesmvvm.R
 import com.kochipek.moviesmvvm.databinding.FragmentMovieBinding
+import com.kochipek.moviesmvvm.utils.downloadFromUrl
+import com.kochipek.moviesmvvm.utils.placeholderProgressBar
 import com.kochipek.moviesmvvm.viewmodel.MovieViewModel
 
 class MovieFragment : Fragment(R.layout.fragment_movie) {
@@ -19,9 +21,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMovieBinding.bind(view)
         viewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-        viewModel.getMovieData()
-        val movieUuid = args.movieUuid
-        //println(movieUuid) -> 0
+        viewModel.getDataFromRoomDb(args.movieUuid, this.requireContext())
         observeMovieData()
     }
 
@@ -30,8 +30,9 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
             movie?.let {
                 binding.movieTitle.text = movie.title
                 binding.movieReleaseDate.text = movie.release_date
-                binding.movieRating.text = movie.vote_average
+                binding.movieRating.text = String.format("%.1f", movie.vote_average?.toDouble())
                 binding.movieDescription.text = movie.overview
+                binding.imageView.downloadFromUrl("https://image.tmdb.org/t/p/w500${movie.poster_path}", placeholderProgressBar(binding.root.context))
             }
         })
     }

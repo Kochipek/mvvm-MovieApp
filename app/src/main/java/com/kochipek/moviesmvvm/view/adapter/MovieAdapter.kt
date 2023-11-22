@@ -16,7 +16,7 @@ class MovieAdapter(val movieList: ArrayList<Movie>) :
         fun bind(model: Movie) {
             binding.movieTitle.text = model.title
             binding.movieReleaseDate.text = model.release_date
-            binding.movieRating.text = model.vote_average
+            binding.movieRating.text = String.format("%.1f", model.vote_average?.toDouble())
             binding.imageView.downloadFromUrl("https://image.tmdb.org/t/p/w500${model.poster_path}", placeholderProgressBar(binding.root.context))
         }
     }
@@ -30,7 +30,7 @@ class MovieAdapter(val movieList: ArrayList<Movie>) :
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(movieList[position])
         holder.itemView.setOnClickListener {
-            val action = FeedFragmentDirections.actionFeedFragmentToMovieFragment()
+            val action = FeedFragmentDirections.actionFeedFragmentToMovieFragment(movieList[position].uuid)
             Navigation.findNavController(it).navigate(action)
         }
     }
@@ -39,7 +39,6 @@ class MovieAdapter(val movieList: ArrayList<Movie>) :
         return movieList.size
     }
 
-    // update when swipe screen
     fun updateWhenSwipe(newMovieList: List<Movie>) {
         movieList.clear()
         movieList.addAll(newMovieList)

@@ -8,7 +8,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.kochipek.moviesmvvm.R
 
 class Utils {
-    // burada companion object kullanmamızın sebebi bu sınıfın static olmasıdır. yani bu sınıfın herhangi bir nesnesini oluşturmadan bu sınıfın içindeki değişkenlere ve fonksiyonlara erişebiliriz.
     companion object {
         const val BASE_URL = "https://api.themoviedb.org/3/"
         const val API_KEY = "43cf09ac0f4b550009ffed8bc2834096"

@@ -4,7 +4,6 @@ import MovieAdapter
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kochipek.moviesmvvm.R
@@ -17,53 +16,37 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
     private lateinit var viewModel: FeedViewModel
     private val movieAdapter = MovieAdapter(arrayListOf())
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFeedBinding.bind(view)
         viewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
-        viewModel.loadData()
-        // !
+
         binding.movieList.layoutManager = LinearLayoutManager(context)
         binding.movieList.adapter = movieAdapter
-
+        viewModel.loadData(this.requireContext())
         binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadData(this.requireContext())
             binding.movieList.visibility = View.GONE
-            binding.movieError.visibility = View.GONE
-            viewModel.loadData()
             binding.swipeRefreshLayout.isRefreshing = false
         }
+
         observeFeedData()
     }
 
     private fun observeFeedData() {
-        viewModel.movies.observe(viewLifecycleOwner, Observer { movies ->
+        viewModel.movies.observe(viewLifecycleOwner) { movies ->
             movies?.let {
                 binding.movieList.visibility = View.VISIBLE
                 movieAdapter.updateWhenSwipe(movies)
             }
-        })
-        viewModel.loadingState.observe(viewLifecycleOwner, Observer { isLoading ->
+        }
+
+        viewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
             isLoading?.let {
-                if (it) {
-                    binding.movieLoadingBar.visibility = View.VISIBLE
-                    binding.movieError.visibility = View.GONE
-                    binding.movieList.visibility = View.GONE
-                } else {
-                    binding.movieLoadingBar.visibility = View.GONE
-                }
+                binding.movieLoadingBar.visibility = if (it) View.VISIBLE else View.GONE
+                binding.movieList.visibility = if (it) View.GONE else View.VISIBLE
             }
-        })
-        viewModel.movieError.observe(viewLifecycleOwner, Observer { error ->
-            error?.let {
-                if (it) {
-                    binding.movieError.visibility = View.VISIBLE
-                } else {
-                    binding.movieError.visibility = View.GONE
-                }
-
-
-            }
-        })
+        }
     }
-
 }

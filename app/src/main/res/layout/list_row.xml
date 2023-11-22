@@ -5,36 +5,34 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
+        android:layout_height="630dp"
+        android:padding="5dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="609dp"
+                android:background="#8C8C8C"
                 android:orientation="vertical"
-                android:padding="10dp"
-                android:background="@android:color/darker_gray">
+                android:padding="5dp">
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_width="402dp"
+                    android:layout_height="501dp"
+                    android:contentDescription="@string/desc"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_launcher_background"
-                    tools:ignore="ImageContrastCheck"
-                    android:contentDescription="@string/desc" />
+                    tools:ignore="ImageContrastCheck" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -45,9 +43,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/movie_title"
-                        android:textColor="#455A64"
-                        android:textSize="22sp"
+                        android:textColor="#202020"
+                        android:textSize="32sp"
                         android:textStyle="bold"
+                        android:padding="5dp"
                         app:layout_constraintEnd_toStartOf="@id/movieRating"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintHorizontal_chainStyle="packed"
@@ -59,8 +58,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/_3_7"
-                        android:textColor="#455A64"
-                        android:textSize="24sp"
+                        android:textColor="#202020"
+                        android:textSize="32sp"
+                        android:padding="5dp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/movieTitle"
@@ -73,8 +73,10 @@
                     android:layout_height="35dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/_2016_10_19"
-                    android:textColor="#4E342E"
-                    android:textSize="16sp" />
+                    android:textColor="#202020"
+                    android:textSize="22sp"
+                    android:padding="5dp"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

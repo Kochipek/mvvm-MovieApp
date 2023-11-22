@@ -1,57 +1,59 @@
 package com.kochipek.moviesmvvm.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.kochipek.moviesmvvm.data.model.Movie
+import com.kochipek.moviesmvvm.data.source.local.db.MovieDatabase
 import com.kochipek.moviesmvvm.data.source.remote.MovieAPIService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 class FeedViewModel : ViewModel() {
     var job : Job? = null
     private val movieAPIService = MovieAPIService()
     var movies = MutableLiveData<List<Movie>>()
-    var movieError = MutableLiveData<Boolean>()
     var loadingState = MutableLiveData<Boolean>()
 
-    // dummy data
-    // load data from API with retrofit and coroutines
-    fun loadData() {
-        // Loading state başlat
+    fun loadData(context: Context) {
         loadingState.value = true
-
-        // CoroutineScope başlat
-        job = CoroutineScope(Dispatchers.IO).launch {
+        job = viewModelScope.launch {
             try {
-                // Verileri API'den çek
                 val response = movieAPIService.getData()
-
-                withContext(Dispatchers.Main) {
-                    if (response.isSuccessful) {
-                        movies.value = response.body()?.results
-                        movieError.value = false
-                    } else {
-                        movieError.value = true
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        storeDataLocally(it.results, context)
                     }
+                } else {
                     loadingState.value = false
                 }
-            } catch (e: Exception) {
-                // Hata durumunda
-                withContext(Dispatchers.Main) {
-                    movieError.value = true
-                    loadingState.value = false
-                }
+                loadingState.value = false
+                        } catch (e: Exception) {
+                               loadingState.value = false
             }
         }
-    }
+        }
 
-    // ViewModel yok edildiğinde, işlemi iptal et
     override fun onCleared() {
         super.onCleared()
         job?.cancel()
     }
+    private fun storeDataLocally(moviesList: List<Movie> , context: Context) {
+        viewModelScope.launch {
+            val movieDao = MovieDatabase(context).movieDao()
+            movieDao.deleteAllMovies()
+            val listLong = movieDao.insertAllMovies(*moviesList.toTypedArray())
+            var i = 0
+            while (i < moviesList.size) {
+                moviesList[i].uuid = listLong[i].toInt()
+                i += 1
+            }
+            moviesRetrieved(moviesList)
+        }
+    }
+    private fun moviesRetrieved(moviesList: List<Movie>) {
+        movies.value = moviesList
+        loadingState.value = false
 
+    }
 }
