@@ -9,14 +9,12 @@ This is a simple Android app that demonstrates the Model-View-ViewModel (MVVM) a
 - Implements MVVM architecture for clean and maintainable code.
 - Utilizes Coroutines for asynchronous operations.
 - Uses Retrofit for making network requests.
-## Todo Features
-- Complete Movie Details page with Room Database
-- Add favourite option and save them into sharedPreferences
-
-
+-  Movie Details page with Room Database
 ## Screenshots
 
-<img src="https://github.com/Kochipek/mvvm-MovieApp/assets/52817694/363bb107-4c08-4816-b565-9dbdc3810334/Screenshot_20231011_233706.png" alt="Screenshot" width="200"/>
+| Home Screen | Details Screen |
+| ------- | ------- | 
+|<img src="Screenshot_20231123_015607.png" width="250" height="500"/>|<img src="Screenshot_20231123_015534.png" width="250" height="500"/>|
 
 ## Libraries Used
 - Coroutines for managing asynchronous tasks.
@@ -24,6 +22,7 @@ This is a simple Android app that demonstrates the Model-View-ViewModel (MVVM) a
 - Glide for loading and caching images.
 - ViewModel from Android Architecture Components.
 - LiveData for reactive data updates.
+- Room for save data in a local database
 
 ## Installation
 Clone the repository:
